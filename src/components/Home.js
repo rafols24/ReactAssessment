@@ -4,12 +4,13 @@ import AddTask from './AddTask';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from "sweetalert2";
+import EditContacts from './EditContacts'
 
 function App() {
     // All States
     const [loading, setloading] = useState(true); // Pre-loader before page renders
     const [tasks, setTasks] = useState([]); // Task State
-    const [showAddTask, setShowAddTask] = useState(false); // To reveal add task form
+    const [showAddTask, setShowAddTask] = useState(false);// To reveal add task form
 
     // Pre-loader
     useEffect(() => {
@@ -44,7 +45,6 @@ function App() {
         })
 
         localStorage.setItem("ContactAdded", JSON.stringify([...tasks, newTask]));
-        alert(id)
     }
 
     // Delete Task
@@ -62,55 +62,54 @@ function App() {
         localStorage.setItem("ContactAdded", JSON.stringify(deleteTask));
     }
 
-    const showTask = (task) =>{
-        let data = JSON.parse(localStorage.getItem('ContactAdded'));
-        <div>
-        <p>Contact ID:{task.id}</p>
-        <p>Fullname:{task.fullname}</p>
-        <p>Email Address:{task.email}</p>
-        <p>Contact Number:{task.number}</p>
-        <p>Location:{task.location}</p>
-        <p>Registered Date:{task.date}</p>
 
-        </div>
-        
+    const showTask = (id) => {
+        const show = tasks.filter((task) => task.id !== id)
+
+        setTasks(showTask)
+
+        localStorage.getItem("ContactShowed",JSON.stringify(showTask))
     }
+
+   
 
     // Edit Task
-    const editTask = (id) => {
+    // const editTask = (id) => {
 
-        const fullname = prompt("Full Name");
-        const email = prompt("Email Address");
-        const number = prompt("Contact Number");
-        const location = prompt("Location");
-        const date = prompt("Registered date");
-        let data = JSON.parse(localStorage.getItem('ContactAdded'));
+    //     <EditContacts />
+       
+    //     const fullname = prompt("Full Name");
+    //     const email = prompt("Email Address");
+    //     const number = prompt("Contact Number");
+    //     const location = prompt("Location");
+    //     const date = prompt("Registered date");
+    //     let data = JSON.parse(localStorage.getItem('ContactAdded'));
 
-        const myData = data.map(x => {
-            if (x.id === id) {
-                return {
-                    ...x,
-                    id: uuidv4(),
-                    fullname: fullname,
-                    email: email,
-                    number: number,
-                    location: location,
-                    date: date,
+    //     const myData = data.map(x => {
+    //         if (x.id === id) {
+    //             return {
+    //                 ...x,
+    //                 id: uuidv4(),
+    //                 fullname: fullname,
+    //                 email: email,
+    //                 number: number,
+    //                 location: location,
+    //                 date: date,
                     
-                }
-            }
-            return x;
-        })
+    //             }
+    //         }
+    //         return x;
+    //     })
 
-        Swal.fire({
-            icon: 'success',
-            title: 'Yay...',
-            text: 'You have successfully edited an existing task!'
-        })
+    //     Swal.fire({
+    //         icon: 'success',
+    //         title: 'Yay...',
+    //         text: 'You have successfully edited an existing task!'
+    //     })
 
-        localStorage.setItem("ContactAdded", JSON.stringify(myData));
-        window.location.reload();
-    }
+    //     localStorage.setItem("ContactAdded", JSON.stringify(myData));
+    //     window.location.reload();
+    // }
     return (
         <>
            { /*<Router>
@@ -144,6 +143,7 @@ function App() {
                     </div>
                     :
                     <div className="container">
+
                         {/* App Header that has open and App Name */}
                         <Header showForm={() => setShowAddTask(!showAddTask)} changeTextAndColor={showAddTask} />
 
@@ -157,7 +157,7 @@ function App() {
                         {
                             tasks.length > 0
                                 ?
-                                (<Tasks tasks={tasks} onDelete={deleteTask} onEdit={editTask} onShow={showTask} />)
+                                (<Tasks tasks={tasks} onDelete={deleteTask}  onShow={showTask}  />)
                                 :
                                 (' No Contacts Found!')
                         }

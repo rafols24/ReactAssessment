@@ -1,25 +1,11 @@
 import { Link } from 'react-router-dom';
 import { FaEye, FaPencilAlt, FaTimes } from 'react-icons/fa';
 import "../index.css"
+const Task = ({ task, onDelete, onEdit, }) => {
 
-const Task = ({ task, onDelete, onEdit, onShow }) => {
-    return (
-        <div>
-
-            <table class="table">
-                <thead class="thead-dark">
+    
+    return (      
                     <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">FullName</th>
-                        <th scope="col">Email Address</th>
-                        <th scope="col">Contact Number</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Registered Date</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-        
-                <tbody>
                         <td>{task.id}</td>
                         <td>{task.fullname}</td>
                         <td>{task.email}</td>
@@ -27,17 +13,14 @@ const Task = ({ task, onDelete, onEdit, onShow }) => {
                         <td>{task.location}</td>
                         <td>{task.date}</td>
                         <td>
-                            <p><FaEye onClick={() => onShow(task.id)} className="editIcon" />&nbsp;<FaTimes onClick={() => onDelete(task.id)} className="delIcon" /> &nbsp;<FaPencilAlt onClick={() => onEdit(task.id)} className="editIcon" /></p>
+                        
+                        <Link exact to={`/ShowContacts/${task.id}`}><FaEye onClick={(task.id)} className="editIcon" /></Link>&nbsp;
+                        <FaTimes onClick={() => onDelete(task.id)} className="delIcon" /> &nbsp;
+                        <Link to="./EditContacts"><FaPencilAlt onClick={() => onEdit(task.id)} className="editIcon" /></Link>
                         </td>
-                  
-                </tbody>
-            </table>
-
-
-
-
-        </div>
+                        </tr>  
+      
     )
 }
 
-export default Task
+export default Task;

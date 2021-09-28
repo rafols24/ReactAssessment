@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import ShowContacts from "./components/ShowContacts";
-import EditContacts from './components/EditContacts';
+import EditContacts from "./components/EditContacts";
 import Home from "./components/Home";
 
 
@@ -11,8 +11,8 @@ function App() {
       <div>
               <Switch>
                 <Route exact path='/' component={Home} />
-                <Route exact path='/EditContacts' component={EditContacts} />
-                <Route path="/ShowContact" component={ShowContacts} />
+                <Route exact path='./EditContacts/:id' component={EditContacts} />
+                <Route path="/ShowContacts/:id" component={ShowContacts} />
               </Switch>
       </div>
   </Router>

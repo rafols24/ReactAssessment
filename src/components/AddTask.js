@@ -7,20 +7,63 @@ const AddContact = ({ onSave }) => {
     const [number, setNumber] = useState('');
     const [location, setLocation] = useState('');
     const [date, setDate] = useState('');
+    const fullnameCheck = RegExp(/^[aA-zZ\s]+$/);
+    const emailCheck = RegExp(/^([A-Za-z\d.-]+)@([A-Za-z\d]+)\.([A-Za-z]{2,45})$/)
+    const numberCheck = RegExp(/^\d+$/)
 
     const onSubmit = (e) => {
         e.preventDefault();
 
-        if (!fullname || !date || !email || !number || !location) {
+        if (!fullname && !date && !email && !number && !location) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Please Make sure you fill it up completely!'
+                text: 'Fields cannot be blank!'
             })
-        } else {
-            onSave({ fullname, email, number, location, date });
+           
+        } else  if(!fullnameCheck.test(fullname)){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Fullname field accepts characters values only!'
+            })
+        } else if(!fullname.length >= 31){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Fullname field accepts up to 30 in size only!'
+            })
+        } else if (!email.length >= 45){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Fullname field accepts up to 45 in size only!'
+            }) 
+        }else if (!emailCheck.test(email)){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Email field accepts only proper domain!'
+                })
         }
-
+        else if (!number>=12){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Email field accepts only proper domain!'
+            })
+        } else if (!numberCheck.test(number)){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Email field accepts only proper domain!'
+            })
+        }else {
+            onSave({ fullname, email, number, location, date });
+        } 
+       
+        
+        
         setFullName('');
         setEmail('');
         setNumber('');
@@ -46,7 +89,7 @@ const AddContact = ({ onSave }) => {
                 <label>Location</label>
                 {/*<input type="text" placeholder="add location" value={location} onChange={(e) => setLocation(e.target.value)} >*/}
                 <select name="" id="" value={location} onChange={(e) => setLocation(e.target.value)}>
-                    <option value=""></option>
+                    <option value="">Please input your location</option>
                     <option value="Cebu">Cebu</option>
                     <option value="Manila">Manila</option>
                 </select>
