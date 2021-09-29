@@ -1,13 +1,13 @@
 
 import { Link } from 'react-router-dom';
-import { Task } from './Task';
-import { v4 as uuidv4 } from 'uuid';
 
 
-const View = () => {
-    const id = uuidv4();
+const View = (props) => {
+
+   console.log(props);
    const Contacts = JSON.parse(localStorage.getItem("ContactAdded"));
-   const contact = Contacts.find(contact => contact.id === "7f18c98b-d3bc-45e2-a7b8-2f03d2dacafd")
+   console.log(Contacts);
+   const contact = Contacts.find(contact => contact.id === props.match.params.id);
    
     console.log(contact);
     // alert(contacts.map((task) => (<Task key={task.id}/>)))   
