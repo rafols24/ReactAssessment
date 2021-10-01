@@ -1,22 +1,21 @@
 import Header from './Header';
-import Tasks from './Tasks';
-import AddTask from './AddTask';
+import AddContact from './AddContact';
 import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Swal from "sweetalert2";
-import EditContacts from './EditContacts'
+import Pagination from './pagination';
 
 function App() {
     // All States
     const [loading, setloading] = useState(true); // Pre-loader before page renders
-    const [tasks, setTasks] = useState([]); // Task State
-    const [showAddTask, setShowAddTask] = useState(false);// To reveal add task form
+    const [contacts, setContacts] = useState([]); // Contacts State
+    const [showAddContact, setShowAddContact] = useState(false);// To reveal add add form
 
     // Pre-loader
     useEffect(() => {
         setTimeout(() => {
             setloading(false);
-        }, 3500);
+        }, 3000);
     }, [])
 
     // Fetching from Local Storage
@@ -24,19 +23,19 @@ function App() {
 
     useEffect(() => {
         if (getContacts == null) {
-            setTasks([])
+            setContacts([])
         } else {
-            setTasks(getContacts);
+            setContacts(getContacts);
         }
         // eslint-disable-next-line
     }, [])
 
     // Add Task
-    const addTask = (task) => {
+    const addContact = (contact) => {
         const id = uuidv4();
-        const newTask = { id, ...task }
+        const newContact = { id, ...contact }
 
-        setTasks([...tasks, newTask]);
+        setContacts([...contacts, newContact]);
 
         Swal.fire({
             icon: 'success',
@@ -44,72 +43,88 @@ function App() {
             text: 'You have successfully added a new task!'
         })
 
-        localStorage.setItem("ContactAdded", JSON.stringify([...tasks, newTask]));
+        localStorage.setItem("ContactAdded", JSON.stringify([...contacts, newContact]));
     }
 
     // Delete Task
-    const deleteTask = (id) => {
-        const deleteTask = tasks.filter((task) => task.id !== id);
+    const deleteContact = (id) => {
+        const deleteContact = contacts.filter((contact) => contact.id !== id); 
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-success',
+              cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+          })
+          
+          swalWithBootstrapButtons.fire({
+            title: 'Are you sure to delete the record?',
+            text: "cannot retrieve data",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+                setContacts(deleteContact);
+              swalWithBootstrapButtons.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+            } else if (
+              /* Read more about handling dismissals below */
+              result.dismiss === Swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your imaginary file is safe :)',
+                'error'
+              )
+            }
+          })
+        
 
-        setTasks(deleteTask);
+       
+
+        localStorage.setItem("ContactAdded", JSON.stringify(deleteContact));
+    }
+    const editContacts = (id) => {
+
+       
+        const fullname = prompt("Edit your Fullname");
+        const email = prompt("Edit your Email Address");
+        const number = prompt("Edit your Contact Number");
+        const location = prompt("Edit your Location");
+        const date = prompt("Edit Registered date");
+        let data = JSON.parse(localStorage.getItem('ContactAdded'));
+
+        const myData = data.map(x => {
+            if (x.id === id) {
+                return {
+                    ...x,
+                    id: uuidv4(),
+                    fullname: fullname,
+                    email: email,
+                    number: number,
+                    location: location,
+                    date: date,
+                    
+                }
+            }
+            return x;
+        })
 
         Swal.fire({
             icon: 'success',
-            title: 'Oops...',
-            text: 'You have successfully deleted a contact!'
+            title: 'Yay...',
+            text: 'You have successfully edited an existing task!'
         })
 
-        localStorage.setItem("ContactAdded", JSON.stringify(deleteTask));
+        localStorage.setItem("ContactAdded", JSON.stringify(myData));
+        window.location.reload();
     }
-
-
-    const showTask = (id) => {
-        const show = tasks.filter((task) => task.id !== id)
-
-        setTasks(showTask)
-
-        localStorage.getItem("ContactShowed",JSON.stringify(showTask))
-    }
-
-   
-
-    // Edit Task
-    // const editTask = (id) => {
-
-    //     <EditContacts />
-       
-    //     const fullname = prompt("Full Name");
-    //     const email = prompt("Email Address");
-    //     const number = prompt("Contact Number");
-    //     const location = prompt("Location");
-    //     const date = prompt("Registered date");
-    //     let data = JSON.parse(localStorage.getItem('ContactAdded'));
-
-    //     const myData = data.map(x => {
-    //         if (x.id === id) {
-    //             return {
-    //                 ...x,
-    //                 id: uuidv4(),
-    //                 fullname: fullname,
-    //                 email: email,
-    //                 number: number,
-    //                 location: location,
-    //                 date: date,
-                    
-    //             }
-    //         }
-    //         return x;
-    //     })
-
-    //     Swal.fire({
-    //         icon: 'success',
-    //         title: 'Yay...',
-    //         text: 'You have successfully edited an existing task!'
-    //     })
-
-    //     localStorage.setItem("ContactAdded", JSON.stringify(myData));
-    //     window.location.reload();
-    // }
     return (
         <>
            { /*<Router>
@@ -145,24 +160,25 @@ function App() {
                     <div className="container">
 
                         {/* App Header that has open and App Name */}
-                        <Header showForm={() => setShowAddTask(!showAddTask)} changeTextAndColor={showAddTask} />
+                        <Header showForm={() => setShowAddContact(!showAddContact)} changeTextAndColor={showAddContact} />
 
                         {/* Revealing of Add Task Form */}
-                        {showAddTask && <AddTask onSave={addTask} />}
+                        {showAddContact && <AddContact onSave={addContact} />}
 
                         {/* Task Counter */}
-                        { <h3>Number of Contacts: {tasks.length}</h3>}
+                        { <h3>Number of Contacts: {contacts.length}</h3>}
 
                         {/* Displaying of Tasks */}
                         {
-                            tasks.length > 0
+                            contacts.length > 0
                                 ?
-                                (<Tasks tasks={tasks} onDelete={deleteTask}  onShow={showTask}  />)
+                                (<Pagination contacts={contacts} onDelete={deleteContact} onEdit={editContacts}  />)
                                 :
                                 (' No Contacts Found!')
                         }
                     </div>
                     }
+                
         </>
     )
 }

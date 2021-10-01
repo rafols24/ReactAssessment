@@ -1,8 +1,7 @@
-
 import { useState } from 'react';
 import Swal from "sweetalert2";
 
-const EditContact = ({ onSave }) => {
+const AddContact = ({ onSave }) => {
     const [fullname, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [number, setNumber] = useState('');
@@ -11,8 +10,6 @@ const EditContact = ({ onSave }) => {
     const fullnameCheck = RegExp(/^[aA-zZ\s]+$/);
     const emailCheck = RegExp(/^([A-Za-z\d.-]+)@([A-Za-z\d]+)\.([A-Za-z]{2,45})$/)
     const numberCheck = RegExp(/^\d+$/);
-
-    console.log(onSave);
 
 
     const onSubmit = (e) => {
@@ -133,10 +130,10 @@ const EditContact = ({ onSave }) => {
                 <input type="date" placeholder="MM/DD/YYY" value={date} onChange={(e) => setDate(e.target.value)} />
             </div>
 
-            <input type="submit" className="btn btn-block" value="Update Contact" />
+            <input type="submit" className="btn btn-block" value="Add Contact" />
             
         </form>
     )
 }
 
-export default EditContact;
+export default AddContact;
