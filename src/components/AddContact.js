@@ -118,7 +118,6 @@ const AddContact = ({ onSave }) => {
             </div>
             <div className="form-control">
                 <label>Location</label>
-                {/*<input type="text" placeholder="add location" value={location} onChange={(e) => setLocation(e.target.value)} >*/}
                 <select name="" id="" value={location} onChange={(e) => setLocation(e.target.value)}>
                     <option value="">Please input your location</option>
                     <option value="Cebu">Cebu</option>

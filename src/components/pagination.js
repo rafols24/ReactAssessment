@@ -11,8 +11,6 @@ import TableRow from '@material-ui/core/TableRow';
 import { FaEye, FaPencilAlt, FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-
-
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -22,11 +20,10 @@ const useStyles = makeStyles({
   },
 });
 
-
  function Pagination({onDelete, onEdit} ) {
     const Contacts = JSON.parse(localStorage.getItem("ContactAdded"));
     console.log(Contacts)
-    
+  
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -52,8 +49,6 @@ const useStyles = makeStyles({
               <TableCell>Location</TableCell>
               <TableCell>Registered Data</TableCell>
               <TableCell>Action</TableCell>
-
-
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,9 +67,7 @@ const useStyles = makeStyles({
                 
                 <Link exact to={`/ShowContacts/${contact.id}`}><FaEye onClick={(contact.id)} className="editIcon" /></Link>&nbsp;
                         <FaTimes onClick={() => onDelete(contact.id)} className="delIcon" /> &nbsp;
-                        <FaPencilAlt onClick={() => onEdit(contact.id) } className="editIcon" />
-                
-                
+                      <FaPencilAlt onClick={()=> onEdit(contact.id)} className="editIcon" />
                 </TableCell>
                 </TableRow>
           )}

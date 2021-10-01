@@ -46,6 +46,8 @@ function App() {
         localStorage.setItem("ContactAdded", JSON.stringify([...contacts, newContact]));
     }
 
+
+
     // Delete Task
     const deleteContact = (id) => {
         const deleteContact = contacts.filter((contact) => contact.id !== id); 
@@ -91,8 +93,6 @@ function App() {
         localStorage.setItem("ContactAdded", JSON.stringify(deleteContact));
     }
     const editContacts = (id) => {
-
-       
         const fullname = prompt("Edit your Fullname");
         const email = prompt("Edit your Email Address");
         const number = prompt("Edit your Contact Number");
@@ -127,15 +127,6 @@ function App() {
     }
     return (
         <>
-           { /*<Router>
-                <Container>
-                    <Switch>
-                        <Route path='./ShowContact' component={ShowContact} />
-                    </Switch>
-                </Container>
-            </Router>
-           */}
-
             {
                 loading
                     ?
@@ -162,17 +153,17 @@ function App() {
                         {/* App Header that has open and App Name */}
                         <Header showForm={() => setShowAddContact(!showAddContact)} changeTextAndColor={showAddContact} />
 
-                        {/* Revealing of Add Task Form */}
+                        {/* Revealing of contacts Task Form */}
                         {showAddContact && <AddContact onSave={addContact} />}
 
-                        {/* Task Counter */}
+                        {/* Contacts Counter */}
                         { <h3>Number of Contacts: {contacts.length}</h3>}
 
-                        {/* Displaying of Tasks */}
+                        {/* Displaying of Contacts */}
                         {
                             contacts.length > 0
                                 ?
-                                (<Pagination contacts={contacts} onDelete={deleteContact} onEdit={editContacts}  />)
+                                (<Pagination contacts={contacts} onDelete={deleteContact} onEdit={editContacts} />)
                                 :
                                 (' No Contacts Found!')
                         }
