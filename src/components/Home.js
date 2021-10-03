@@ -48,18 +48,18 @@ function App() {
 
 
 
-    // Delete Task
+    // Delete a specific Contact
     const deleteContact = (id) => {
-        const deleteContact = contacts.filter((contact) => contact.id !== id); 
+        const deleteContact = contacts.filter((contact) => contact.id !== id);
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
-              confirmButton: 'btn btn-success',
-              cancelButton: 'btn btn-danger'
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
             },
             buttonsStyling: false
-          })
-          
-          swalWithBootstrapButtons.fire({
+        })
+
+        swalWithBootstrapButtons.fire({
             title: 'Are you sure to delete the record?',
             text: "cannot retrieve data",
             icon: 'warning',
@@ -67,29 +67,25 @@ function App() {
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'No, cancel!',
             reverseButtons: true
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 setContacts(deleteContact);
-              swalWithBootstrapButtons.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-              )
+                swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
             } else if (
-              /* Read more about handling dismissals below */
-              result.dismiss === Swal.DismissReason.cancel
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
             ) {
-              swalWithBootstrapButtons.fire(
-                'Cancelled',
-                'Your imaginary file is safe :)',
-                'error'
-              )
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your contact is safe :)',
+                    'error'
+                )
             }
-          })
-        
-
-       
-
+        })
         localStorage.setItem("ContactAdded", JSON.stringify(deleteContact));
     }
     const editContacts = (id) => {
@@ -110,7 +106,7 @@ function App() {
                     number: number,
                     location: location,
                     date: date,
-                    
+
                 }
             }
             return x;
@@ -157,19 +153,19 @@ function App() {
                         {showAddContact && <AddContact onSave={addContact} />}
 
                         {/* Contacts Counter */}
-                        { <h3>Number of Contacts: {contacts.length}</h3>}
+                        {<h3>Number of Contacts: {contacts.length}</h3>}
 
                         {/* Displaying of Contacts */}
                         {
                             contacts.length > 0
                                 ?
-                                (<Pagination contacts={contacts} onDelete={deleteContact} onEdit={editContacts} />)
+                                (<Pagination contacts={contacts} onDelete={deleteContact} />)
                                 :
                                 (' No Contacts Found!')
                         }
                     </div>
-                    }
-                
+            }
+
         </>
     )
 }

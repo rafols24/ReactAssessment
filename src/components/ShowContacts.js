@@ -14,33 +14,31 @@ const View = (props) => {
 
 
     return (
-        <div>
+        <div className="container">
             <br />
-
             <form className="show-form">
                 <div className="form-control">
+                    <label >ID</label>
+                    {<p>{contact.id}</p>}
+                </div>
+                <div className="form-control">
                     <label >Full Name</label>
-                    <hr />
                     {<p>{contact.fullname}</p>}
                 </div>
                 <div className="form-control">
                     <label>Email Address</label>
-                    <hr />
                     {<p>{contact.email}</p>}
                 </div>
                 <div className="form-control">
                     <label>Contact Number</label>
-                    <hr />
                     {<p>{contact.number}</p>}
                 </div>
                 <div className="form-control">
                     <label>Location</label>
-                    <hr />
                     {<p>{contact.location}</p>}
                 </div>
                 <div className="form-control">
                     <label>Registered date</label>
-                    <hr />
                     {<p>{contact.date}</p>}
                 </div>
 

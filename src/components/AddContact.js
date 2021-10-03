@@ -6,15 +6,15 @@ const AddContact = ({ onSave }) => {
     const [email, setEmail] = useState('');
     const [number, setNumber] = useState('');
     const [location, setLocation] = useState('');
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(new Date());
     const fullnameCheck = RegExp(/^[aA-zZ\s]+$/);
-    const emailCheck = RegExp(/^([A-Za-z\d.-]+)@([A-Za-z\d]+)\.([A-Za-z]{2,45})$/)
     const numberCheck = RegExp(/^\d+$/);
+    const emailCheck = RegExp(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/);
 
 
     const onSubmit = (e) => {
+        
         e.preventDefault();
-
         if (!fullname && !date && !email && !number && !location) {
             Swal.fire({
                 icon: 'error',
@@ -43,18 +43,12 @@ const AddContact = ({ onSave }) => {
                 title: 'Oops...',
                 text: 'Fullname field accepts up to 30 in size only!'
             })
-        } else if(!location){
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Location field cannot be blank'
-            })
         } 
         else  if(!email){
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'email field Could not be empty'
+                text: 'email field Could not be blank'
             })
         
         }  else if (!email.length >= 45){
@@ -63,13 +57,13 @@ const AddContact = ({ onSave }) => {
                 title: 'Oops...',
                 text: 'Fullname field accepts up to 45 in size only!'
             }) 
-        }else if (!emailCheck.test(email)){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Email field accepts only proper domain!'
-                })
-        } else  if(!number){
+        } else if (!emailCheck.test(email)) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Email field accepts only proper domain!'
+            })
+          } else  if(!number){
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -81,20 +75,37 @@ const AddContact = ({ onSave }) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Email field accepts only proper domain!'
+                text: 'Number must be 11 in size!'
             })
         } else if (!numberCheck.test(number)){
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Email field accepts only proper domain!'
+                text: 'Contact Number field accepts number only!'
             })
-        }else {
+        } else if(!location){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Location field cannot be blank'
+            })
+        } else if(!date){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Registered date field cannot be blank'
+            })
+        }// else if(!date){
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Oops...',
+        //         text: 'Registered date accepts current date only!'
+        //     })
+        // }
+        else {
             onSave({ fullname, email, number, location, date });
         } 
-       
-        
-        
+
         setFullName('');
         setEmail('');
         setNumber('');

@@ -67,7 +67,7 @@ const useStyles = makeStyles({
                 
                 <Link exact to={`/ShowContacts/${contact.id}`}><FaEye onClick={(contact.id)} className="editIcon" /></Link>&nbsp;
                         <FaTimes onClick={() => onDelete(contact.id)} className="delIcon" /> &nbsp;
-                      <FaPencilAlt onClick={()=> onEdit(contact.id)} className="editIcon" />
+                        <Link exact to={`/EditContacts/${contact.id}`}><FaPencilAlt onClick={(contact.id)} className="editIcon" /></Link>
                 </TableCell>
                 </TableRow>
           )}
