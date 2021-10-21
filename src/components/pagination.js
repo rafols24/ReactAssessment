@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -20,10 +20,10 @@ const useStyles = makeStyles({
   },
 });
 
- function Pagination({onDelete, onEdit} ) {
-    const Contacts = JSON.parse(localStorage.getItem("ContactAdded"));
-    console.log(Contacts)
-  
+function Pagination({ onDelete, onEdit }) {
+  const Contacts = JSON.parse(localStorage.getItem("ContactAdded"));
+  console.log(Contacts)
+
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -52,25 +52,20 @@ const useStyles = makeStyles({
             </TableRow>
           </TableHead>
           <TableBody>
-          {Contacts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((contact)=>
-                <TableRow className="classes.tr" hover key={contact.id}>
+            {Contacts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((contact) =>
+              <TableRow className="classes.tr" hover key={contact.id}>
                 <TableCell>{contact.fullname}</TableCell>
-
                 <TableCell>{contact.email}</TableCell>
-
                 <TableCell>{contact.number}</TableCell>
-
                 <TableCell>{contact.location}</TableCell>
-
                 <TableCell>{contact.date}</TableCell>
                 <TableCell>
-                
-                <Link exact to={`/ShowContacts/${contact.id}`}><FaEye onClick={(contact.id)} className="editIcon" /></Link>&nbsp;
-                        <FaTimes onClick={() => onDelete(contact.id)} className="delIcon" /> &nbsp;
-                        <Link exact to={`/EditContacts/${contact.id}`}><FaPencilAlt onClick={(contact.id)} className="editIcon" /></Link>
+                  <Link exact to={`/ShowContacts/${contact.id}`}><FaEye onClick={(contact.id)} className="editIcon" /></Link>&nbsp;
+                  <FaTimes onClick={() => onDelete(contact.id)} className="delIcon" /> &nbsp;
+                  <Link exact to={`/EditContacts/${contact.id}`}><FaPencilAlt onClick={(contact.id)} className="editIcon" /></Link>
                 </TableCell>
-                </TableRow>
-          )}
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

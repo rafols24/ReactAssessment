@@ -101,7 +101,7 @@ else if(allFieldsFilled){
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     switch (name) {
-      case 'quantity':
+      case 'A':
         if (value === '' || parseInt(value) === +value) {
           setContact((prevState) => ({
             ...prevState,
@@ -109,7 +109,7 @@ else if(allFieldsFilled){
           }));
         }
         break;
-      case 'price':
+      case 'B':
         if (value === '' || value.match(/^\d{1,}(\.\d{0,2})?$/)) {
           setContact((prevState) => ({
             ...prevState,
@@ -169,9 +169,7 @@ else if(allFieldsFilled){
             <option value="Cebu">Cebu</option>
             <option value="Manila">Manila</option>
           </select>
-
-
-
+          
         </Form.Group>
         <Form.Group>
           <Form.Label>Registered date</Form.Label>

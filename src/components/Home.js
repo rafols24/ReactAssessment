@@ -27,10 +27,9 @@ function App() {
         } else {
             setContacts(getContacts);
         }
-        // eslint-disable-next-line
     }, [])
 
-    // Add Task
+    // Add Contact
     const addContact = (contact) => {
         const id = uuidv4();
         const newContact = { id, ...contact }
@@ -76,7 +75,6 @@ function App() {
                     'success'
                 )
             } else if (
-                /* Read more about handling dismissals below */
                 result.dismiss === Swal.DismissReason.cancel
             ) {
                 swalWithBootstrapButtons.fire(
